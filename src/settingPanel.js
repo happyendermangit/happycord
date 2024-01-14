@@ -3,7 +3,6 @@
   * added chuncks: 4152535 (setting panel for plugins), 4152534 (setting panel for  themes)
   * modified chunck: 435645 (setting panel menu option)
 **/
-
 (this.webpackChunkdiscord_app = this.webpackChunkdiscord_app || []).push([
     ["44994"], {
         979897: function(e, t, s) {
@@ -9593,12 +9592,13 @@
                 l = s.n(n),
                 i = s("77078"),
                 r = s("49671"),
-                o = s("172588");
+                o = s("172588"),
+                qzd = s("825287");
 
             function d() {
                 var e, t, s, n, d, u;
                 let c = window.GLOBAL_ENV.RELEASE_CHANNEL,
-                    S = (e = s("825287").versionHash, e.substring(0, 7)),
+                    S = (e = "", e.substring(0, 7)),
                     E = null === r.default || void 0 === r.default ? void 0 : r.default.remoteApp.getVersion(),
                     f = null === r.default || void 0 === r.default ? void 0 : null === (t = (s = r.default.remoteApp).getBuildNumber) || void 0 === t ? void 0 : t.call(s),
                     T = null === r.default || void 0 === r.default ? void 0 : null === (n = (d = r.default.remoteApp).getAppArch) || void 0 === n ? void 0 : n.call(d),
@@ -9611,7 +9611,7 @@
                         className: o.line,
                         variant: "text-xs/normal",
                         color: "text-muted",
-                        children: [c, " ", s("825287").buildNumber, " ", (0, a.jsxs)("span", {
+                        children: [c, " ", "", "\n", (0, a.jsxs)("span", {
                             className: o.versionHash,
                             children: ["(", S, ")","\n","Happycord"," ","v1"]
                         })]
