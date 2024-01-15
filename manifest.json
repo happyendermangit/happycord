@@ -1,0 +1,46 @@
+{
+    "manifest_version": 3,
+    "minimum_chrome_version": "91",
+    "name": "HappyCord Web",
+    "description": "The Easiest to use Discord mod in your browser!",
+    "author": "Happy enderman",
+    "host_permissions": [
+        "*://*.discord.com/*",
+        "https://raw.githubusercontent.com/*"
+    ],
+    "permissions": [
+        "declarativeNetRequest"
+    ],
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": [
+                "*://*.discord.com/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "src/*"
+            ],
+            "matches": [
+                "*://*.discord.com/*"
+            ]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "modifyResponseHeaders",
+                "enabled": true,
+                "path": "modifyResponseHeaders.json"
+            }
+        ]
+    },
+    "version": "1.6.6"
+}
