@@ -1,55 +1,65 @@
 .grid{
     padding-bottom: 5px;
-  }
-  .plugin-card {
-      background-color: var(--background-secondary-alt);
-      color: var(--interactive-active);
-      border-radius: 8px;
-      display: block;
-      height: 100%;
-      padding: 12px;
-      width: 100%;
-      transition: 0.1s ease-out;
-      transition-property: box-shadow, transform, background, opacity;
-      box-sizing: border-box;
-  }
+}
+.warning_card{
+    padding: 2em;
+    background-color: #e7828430;
+    border: 1px solid #e78284;
+    border-radius: 5px;
+    color: var(--text-normal, white);
+}
+.experiments_warning_head{
+    padding-bottom: 5px;
+}
+.experiments_warning_desc_1{
+    padding-bottom: 2px;
+}
 
-  .plugin-card-disabled {
-      opacity: 0.6;
-  }
+.plugin-card {
+    background-color: var(--background-secondary-alt);
+    color: var(--interactive-active);
+    border-radius: 8px;
+    display: block;
+    height: 100%;
+    padding: 12px;
+    width: 100%;
+    transition: 0.1s ease-out;
+    transition-property: box-shadow, transform, background, opacity;
+    box-sizing: border-box;
+}
+.plugin-card-disabled {
+    opacity: 0.6;
+}
+.plugin-card:hover {
+    background-color: var(--background-tertiary);
+    transform: translateY(-1px);
+    box-shadow: var(--elevation-high);
+}
+.plugin-card-header{
+  margin-top: auto;
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.5em;
+}
 
-  .plugin-card:hover {
-      background-color: var(--background-tertiary);
-      transform: translateY(-1px);
-      box-shadow: var(--elevation-high);
-  }
-
-  .plugin-card-header{
-    margin-top: auto;
+.plugin-card-desc {
+    height: 36px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    /* stylelint-disable-next-line property-no-unknown */
+    box-orient: vertical;
+}
+.plugin-card-name {
     display: flex;
     width: 100%;
-    justify-content: flex-end;
     align-items: center;
+    flex-grow: 1;
     gap: 8px;
-    margin-bottom: 0.5em;
-  }
-  
-  .plugin-card-desc {
-      height: 36px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-      /* stylelint-disable-next-line property-no-unknown */
-      box-orient: vertical;
-  }
-
-  .plugin-card-name {
-      display: flex;
-      width: 100%;
-      align-items: center;
-      flex-grow: 1;
-      gap: 8px;
-  }
+}

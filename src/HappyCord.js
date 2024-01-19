@@ -22,42 +22,38 @@ window.Happycord = window.Happycord ?? {}
 
 window.Happycord.localStorage = window.localStorage
 
-if (window.Happycord.pluginsEnabled === undefined){
-    window.Happycord.localStorage.setItem('pluginsEnabled','[]')
-}
-if (window.Happycord.themes === undefined){
-    window.Happycord.localStorage.setItem('themes','[]')
-}
 
 
 const loadHappyCord = () => {
    
     window.Happycord.localStorage = localStorage
     
-    window.Happycord.plugins =  [
-        {
-            title:"HappyCord",
-            description:"cool! asf and enabed by default",
-            authors:[
-                1102694284425187418
-            ],
-            id:"happycordPlugin"
-        },
-    ]
+    fetch('https://raw.githubusercontent.com/happyendermangit/happycord/main/plugins.js')
+    .then(e=>e.text())
+    .then(e=>{
+        eval(e)
+    })
 
     const pluginsEnabled = JSON.parse(window.Happycord.localStorage?.pluginsEnabled ?? "[]")
 
 
     window.Happycord.pluginsEnabled = pluginsEnabled
+    
+    window.Happycord.pluginsLoaded = []
 
-    //window.Happycord.pluginsEnabled.push('')
     //window.Happycord.pluginsEnabled.push('')
     
 
     window.Happycord.themes = JSON.parse(window.Happycord.localStorage?.themes ?? "[]") 
 
     
-
+        
+    if (window.Happycord.pluginsEnabled === undefined){
+        window.Happycord.localStorage.setItem('pluginsEnabled','[]')
+    }
+    if (window.Happycord.themes === undefined){
+        window.Happycord.localStorage.setItem('themes','[]')
+    }
     
     // made by minerpl (791077984395591720)
     document.addEventListener('DOMContentLoaded',()=>{
@@ -80,11 +76,15 @@ const loadHappyCord = () => {
        
         
         
-
         // essentiels
         window.Happycord.wreq = wreq
         window.Happycord._mods = _mods 
         window.Happycord.findByProps = findByProps
+        window.Happycord.findStore = (store) => {
+            let o = findByProps("getAll").getAll().find(e => e.constructor.displayName === store);
+            return o 
+        }
+        window.Happycord.restApi = window.Happycord.findByProps('getAPIBaseURL')
 
         window.Happycord.getChunk = c => {
             for (_mod of window.Happycord._mods){
@@ -113,6 +113,7 @@ const loadHappyCord = () => {
 
         window.Happycord.Components = {}
 
+        window.Happycord.Margins = window.Happycord.getChunk('926622').exports
 
         window.Happycord.ToastTypes = window.Happycord.findByProps('showToast').ToastType
 
@@ -128,17 +129,18 @@ const loadHappyCord = () => {
 
             let openModalProps = window.Happycord.findByProps('openModal')
             openModalProps.openModal(e => jsx(openModalProps.ConfirmModal,{
-                header: data.header ?? "header",
-                confirmText: data.confirmText ?? "Ok.",
-                cancelText: data.cancelText ?? "Cancel.",
-                onConfirm: (e)=>{data.onConfirm(e)},
-                confirmButtonColor: data.confirmButtonColor ?? openModalProps.Button.Colors.BRAND,
+                header: data?.header ?? "header",
+                confirmText: data?.confirmText ?? "Ok.",
+                cancelText: data?.cancelText ?? "Cancel.",
+                onConfirm: (e)=>{data?.onConfirm(e)},
+                confirmButtonColor: data?.confirmButtonColor ?? openModalProps.Button.Colors.BRAND,
                 ...e,
-                children: data.children
+                children: data?.children
             },!0));
             
         }
 
+        
    
 
         window.Happycord.loadPlugin = (id) => {
@@ -154,6 +156,7 @@ const loadHappyCord = () => {
                     document.body.appendChild(oScript);
                     try{
                         window[id].onLoad(window.Happycord)
+                        window.Happycord.pluginsLoaded.push(id)
                     }
                     catch (e){
                         console.error(`%cHappyCord %c${e}`,'color:yellow;background:green;border-raduis:5px;','color:red')
@@ -161,6 +164,16 @@ const loadHappyCord = () => {
                 }
             })
         } 
+
+        window.Happycord.loadLocalPlugin = (id) => {
+            try {
+                window[id].onLoad(window.Happycord)
+            }
+            catch (e) {
+                console.error(`[HAPPYCORD] (${plugin.id}) failed to load: ${e}`)
+            }
+        }
+
     
         window.Happycord.loadPluginFromString = (code) => {
             
@@ -198,9 +211,14 @@ const loadHappyCord = () => {
             }
         }
     
-        for (plugin of window.Happycord.pluginsEnabled){
-            window.Happycord.loadPlugin(plugin)
-        }
+        Happycord.findByProps('_dispatch').addInterceptor(e=>{
+          if (e.type === "CONNECTION_OPEN"){
+            for (plugin of window.Happycord.pluginsEnabled){
+                window.Happycord.loadPlugin(plugin)
+            }
+          }
+        })
+       
         window.Happycord.loadThemes()
     })
   

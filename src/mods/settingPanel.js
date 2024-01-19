@@ -13125,6 +13125,69 @@
                 
 
                 for (let plugin of plugins){
+                    let children = []
+                    children.push( (0,a.jsxs)(u.Text, {
+                        className: "plugin-card-name",
+                        variant: "text-md/bold",
+                        children: plugin.title
+                    }))
+                    
+                    
+                    if (window.Happycord.pluginsLoaded.includes(plugin.id)){
+                        if (window[plugin.id].Settings){
+                            children.push( (0,a.jsxs)(r.Button, {
+                                children:"⚙️",
+                                color:r.Button.Colors.BRAND_NEW,
+                                onClick: () => {
+                                    try{
+                                        let c = window[plugin.id].Settings(window.Happycord)
+                                        window.Happycord.openModal({
+                                            header:`${plugin.title} — Settings`,
+                                            children:c[0],
+                                            confirmText:"Save & quit",
+                                            onConfirm: () => {
+                                                c[1]()
+                                            }
+                                        })
+                                    }
+                                    catch (e){
+                                        console.error(`[HAPPYCORD] (${plugin.id}) [REPORT TO DEVS] Settings failed to load: ${e}`)
+                                    }
+                                },
+                            }))
+                        }
+                    }
+
+                    children.push(
+                        (0,a.jsxs)(r.Button, {
+                            children:"Enable",
+                            color:r.Button.Colors.PRIMARY,
+                            onClick: () => {
+                                document.cookie = `${plugin.id}=true`
+                                if (!window.Happycord.pluginsEnabled.includes(plugin.id)){
+                                    window.Happycord.pluginsEnabled.push(plugin.id)
+                                    window.Happycord.localStorage.setItem('pluginsEnabled',JSON.stringify(window.Happycord.pluginsEnabled))
+                                }
+                                d.showToast(d.createToast("Enabled plugin!", d.ToastType.SUCCESS))
+                                window.Happycord.loadPlugin(plugin.id)
+                            },
+                        }),
+                    )
+
+                    children.push( (0,a.jsxs)(r.Button, {
+                        children:"Disable",
+                        color:r.Button.Colors.PRIMARY,
+                        onClick: () => {
+                            window.Happycord.pluginsEnabled.pop(plugin.id)
+                            window.Happycord.localStorage.setItem('pluginsEnabled',window.Happycord.pluginsEnabled)
+                            d.showToast(d.createToast("Disabled plugin! Reload to see changes", d.ToastType.SUCCESS))
+                            if (window[plugin.id].onDisable){
+                                window[plugin.id].onDisable(window.Happycord)
+                            }
+                        },
+                    })
+                    )
+                  
                     pluginsjsx.push((0,a.jsxs)("div",{
                         key:plugin.id,
                         style:{
@@ -13134,43 +13197,13 @@
                         children: [
                             (0,a.jsxs)("div", {
                                 className: "plugin-card-header",
-                                children: [
-                                    (0,a.jsxs)(u.Text, {
-                                        className: "plugin-card-name",
-                                        variant: "text-md/bold",
-                                        children: plugin.title
-                                    }),
-                                    (0,a.jsxs)(r.Button, {
-                                        children:"Enable",
-                                        color:r.Button.Colors.PRIMARY,
-                                        onClick: () => {
-                                            document.cookie = `${plugin.id}=true`
-                                            if (!window.Happycord.pluginsEnabled.includes(plugin.id)){
-                                                window.Happycord.pluginsEnabled.push(plugin.id)
-                                                window.Happycord.localStorage.setItem('pluginsEnabled',JSON.stringify(window.Happycord.pluginsEnabled))
-                                            }
-                                            d.showToast(d.createToast("Enabled plugin!", d.ToastType.SUCCESS))
-                                            window.Happycord.loadPlugin(plugin.id)
-                                        },
-                                    }),
-                                    (0,a.jsxs)(r.Button, {
-                                        children:"Disable",
-                                        color:r.Button.Colors.PRIMARY,
-                                        onClick: () => {
-                                            window.Happycord.pluginsEnabled.pop(plugin.id)
-                                            window.Happycord.localStorage.setItem('pluginsEnabled',window.Happycord.pluginsEnabled)
-                                            d.showToast(d.createToast("Disabled plugin! Reload to see changes", d.ToastType.SUCCESS))
-                                        
-                                        },
-                                    })
-                                ]
+                                children: children 
                             }),
                             (0,a.jsxs)(u.Text, {
                                 className: "plugin-card-desc",
                                 variant: "text-md/normal",
                                 children: plugin.description
                             })
-
                         ]
                
                         
@@ -19253,7 +19286,25 @@
                 return (0, a.jsxs)(o.FormSection, {
                     tag: o.FormTitleTags.H1,
                     title: "Experiments",
-                    children: [(0, a.jsx)(S.default, {
+                    children: [(0,a.jsx)("div",{
+                        className:`warning_card ${window.Happycord.Margins.marginBottom20}`,
+                        children:[
+                            (0,a.jsx)(window.Happycord.findByProps('Text').Text,{
+                                variant: "text-lg/bold",
+                                className:window.Happycord.Margins.marginBottom4,
+                                children: "WARNING!!"
+                            }),
+                            (0,a.jsx)(window.Happycord.findByProps('Text').Text,{
+                                variant: "text-sm/normal",
+                                children: "Experiments are unreleased Discord features. They might not work, or even break your client or get your account disabled."
+                            }),
+                            (0,a.jsx)(window.Happycord.findByProps('Text').Text,{
+                                variant: "text-sm/normal",
+                                className:window.Happycord.Margins.marginTop8,
+                                children: "Only use experiments if you know what you're doing. HappyCord is not responsible for any damage caused by enabling experiments."
+                            }),
+                        ]
+                    }),(0, a.jsx)(S.default, {
                         size: S.default.Sizes.LARGE,
                         query: s,
                         onChange: l,
