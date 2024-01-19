@@ -1,4 +1,4 @@
- [
+ window.Happycord.plugins = [
         {
             title:"Experiments",
             description:"Enables experiments ui",
