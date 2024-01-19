@@ -1,6 +1,6 @@
 window.experimentsPlugin = {
     onLoad: (h) => {
-       for (let i in Array([...5])){
+       for (let i in [1,2,3,4,5]){
         let module = h.findByProps('getUsers')
         nodes = Object.values(module._dispatcher._actionHandlers._dependencyGraph.nodes);
         try {
