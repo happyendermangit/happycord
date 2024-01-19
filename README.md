@@ -15,7 +15,12 @@
 6. choose extracted folder
 
 ## Want to make a plugin?
-read docs (soon:tm:)
+read docs (soon:tm) 
+## Made a plugin?
+- make a pull request and we'll verify the code if it's safe
+- NO MINIFIED/OBSFUCTED codes allowed
+- CODE MUST BE READABLE
+- DONT USE FETCH FOR SENDING REQUESTS TO DC API, USE window.Happycord.restApi
 
 ## keywords [ingore]:
 vencord,ven,betterdiscord,discord,openasar,asar,electron,datamining,bd,vendetta,aluicord,cord,spacebar
