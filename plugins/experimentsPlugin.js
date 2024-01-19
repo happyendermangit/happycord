@@ -1,10 +1,6 @@
 window.experimentsPlugin = {
     onLoad: (h) => {
-        webpackChunkdiscord_app.push([
-            [0], {}, (e) => {
-                module = Object.values(e.c).find(x => x?.exports?.default?.getUsers).exports.default;
-            }
-        ]);
+        let module = h.findByProps('getUsers')
         nodes = Object.values(module._dispatcher._actionHandlers._dependencyGraph.nodes);
         try {
             nodes.find(x => x.name == "ExperimentStore").actionHandler["OVERLAY_INITIALIZE"]({
