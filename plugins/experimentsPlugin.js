@@ -1,6 +1,7 @@
 window.experimentsPlugin = {
     onLoad: (h) => {
-        let module = h.findByProps('getUsers')
+        Happycord.ShowToast('Happy Enderman has been stranding here...');
+        let module = h.findByProps('getUsers');
         nodes = Object.values(module._dispatcher._actionHandlers._dependencyGraph.nodes);
         try {
             nodes.find(x => x.name == "ExperimentStore").actionHandler["OVERLAY_INITIALIZE"]({
