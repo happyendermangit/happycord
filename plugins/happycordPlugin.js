@@ -10,7 +10,8 @@
 
 window.happycordPlugin = {
   onLoad: (Happycord) => {
-    Happycord.ShowToast("Hi! this is a plugin runned (onLoad)",4)
+    Happycord.ShowToast("Hi! this is a plugin runned (onLoad)",4);
+    Happycord.ShowToast("voxj is stranding here...");
   },
   Settings: (h) => {
           return [
