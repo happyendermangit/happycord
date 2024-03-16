@@ -1,3 +1,7 @@
+<h1 align="center">THIS PROJECT WAS MOVED TO <a href="https://github.com/Wumpus-University/HappyCord">HERE</a></h1>
+
+
+
 # HappyCord
 
 [![Discord](https://img.shields.io/discord/1103066670576193627?style=for-the-badge&color=%235562EA)](https://discord.gg/Q6UYNawvaF)
